@@ -1,98 +1,71 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Đăng nhập Netflix</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/062595a3-3f95-4d4f-aed4-2cb6f5a7f949/cd3db18d-4007-49ad-9b29-90f5e8d2405d/VN-vi-20230612-popsignuptwoweeks-perspective_alpha_website_medium.jpg');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
-        }
-
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.6);
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .login-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 60px 68px 40px;
-            background-color: rgba(0, 0, 0, 0.75);
-            color: white;
-            z-index: 2;
-            border-radius: 5px;
-        }
-
-        .login-container h1 {
-            margin-bottom: 24px;
-        }
-
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 20px;
-            background: #333;
-            border: none;
-            color: white;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            background-color: #e50914;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 120px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Spotify Login Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: #1db954;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #191414;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="overlay"></div>
+  <div class="login-box">
+    <h2>Spotify Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Log In</button>
+    <div id="message" class="error"></div>
+  </div>
 
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="Netflix Logo">
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
 
-    <div class="login-container">
-        <h1>Đăng nhập</h1>
-        <form>
-            <input type="email" placeholder="Email hoặc số điện thoại" required>
-            <input type="password" placeholder="Mật khẩu" required>
-            <button type="submit">Đăng nhập</button>
-        </form>
-        <div class="footer">
-            <p>Bạn mới tham gia Netflix? <a href="#">Đăng ký ngay</a></p>
-        </div>
-    </div>
+      if (username === "admin" && password === "2372012fz") {
+        message.style.color = "lightgreen";
+        message.textContent = "Login successful!";
+      } else {
+        message.style.color = "red";
+        message.textContent = "Invalid username or password!";
+      }
+    }
+  </script>
 </body>
 </html>
