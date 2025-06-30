@@ -35,7 +35,8 @@
       letter-spacing: 2px;
     }
 
-    input {
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -43,6 +44,11 @@
       border-radius: 4px;
       background: #333;
       color: white;
+    }
+
+    .checkbox {
+      margin-top: 10px;
+      font-size: 14px;
     }
 
     button {
@@ -80,12 +86,16 @@
     <div class="logo">Scarlet</div>
     <input type="email" id="email" placeholder="Email" />
     <input type="password" id="password" placeholder="Password" />
+    <div class="checkbox">
+      <input type="checkbox" id="showPassword" onclick="togglePassword()" />
+      <label for="showPassword">Hiện mật khẩu</label>
+    </div>
     <button onclick="login()">Sign In</button>
     <div id="message"></div>
   </div>
 
   <script>
-    // Firebase config bạn cung cấp
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyAnnTUysKA2_5bUJtuQjCaUBTBt8OCgVNE",
       authDomain: "login-1ca7a.firebaseapp.com",
@@ -96,21 +106,29 @@
       measurementId: "G-59KRBJJ2XJ"
     };
 
-    // Khởi tạo Firebase
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Hàm đăng nhập
+    // Toggle password visibility
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    }
+
+    // Login
     function login() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const message = document.getElementById("message");
 
       auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          message.textContent = "Login successful!";
+        .then((userCredential) => {
+          const user = userCredential.user;
+          message.innerHTML = `<strong>Đăng nhập thành công!</strong><br>Email: ${user.email}`;
           message.className = "success";
-          // 👉 Nếu muốn chuyển trang sau khi đăng nhập:
+
+          // 👉 Chuyển trang nếu muốn:
           // window.location.href = "home.html";
         })
         .catch(error => {
