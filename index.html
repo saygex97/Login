@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Scarlet Login</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
   <style>
     body {
       margin: 0;
@@ -13,11 +15,10 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-size: cover;
     }
 
     .login-container {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.85);
       padding: 60px 40px;
       border-radius: 8px;
       max-width: 350px;
@@ -28,7 +29,7 @@
     .logo {
       font-size: 32px;
       font-weight: bold;
-      color: #e50914; /* Netflix red */
+      color: #e50914;
       text-align: center;
       margin-bottom: 30px;
       letter-spacing: 2px;
@@ -56,41 +57,66 @@
       margin-top: 15px;
     }
 
+    button:hover {
+      background-color: #f6121d;
+    }
+
+    .error, .success {
+      text-align: center;
+      margin-top: 15px;
+    }
+
     .error {
       color: #ff4c4c;
-      margin-top: 15px;
-      text-align: center;
     }
 
     .success {
       color: #46d369;
-      margin-top: 15px;
-      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="login-container">
     <div class="logo">Scarlet</div>
-    <input type="text" id="username" placeholder="Username" />
+    <input type="email" id="email" placeholder="Email" />
     <input type="password" id="password" placeholder="Password" />
     <button onclick="login()">Sign In</button>
     <div id="message"></div>
   </div>
 
   <script>
+    // Firebase config bạn cung cấp
+    const firebaseConfig = {
+      apiKey: "AIzaSyAnnTUysKA2_5bUJtuQjCaUBTBt8OCgVNE",
+      authDomain: "login-1ca7a.firebaseapp.com",
+      projectId: "login-1ca7a",
+      storageBucket: "login-1ca7a.firebasestorage.app",
+      messagingSenderId: "118273348198",
+      appId: "1:118273348198:web:29122789f4d1044019d3a7",
+      measurementId: "G-59KRBJJ2XJ"
+    };
+
+    // Khởi tạo Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Hàm đăng nhập
     function login() {
-      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const message = document.getElementById("message");
 
-      if (username === "admin" && password === "2372012fz") {
-        message.textContent = "Login successful!";
-        message.className = "success";
-      } else {
-        message.textContent = "Incorrect username or password.";
-        message.className = "error";
-      }
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          message.textContent = "Login successful!";
+          message.className = "success";
+          // 👉 Nếu muốn chuyển trang sau khi đăng nhập:
+          // window.location.href = "home.html";
+        })
+        .catch(error => {
+          message.textContent = error.message;
+          message.className = "error";
+        });
     }
   </script>
 </body>
